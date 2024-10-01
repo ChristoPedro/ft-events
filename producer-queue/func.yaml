@@ -1,0 +1,11 @@
+schema_version: 20180708
+name: producer-queue
+version: 0.0.0
+runtime: python
+build_image: fnproject/python:3.8-dev
+run_image: fnproject/python:3.8
+entrypoint: /python/bin/fdk /function/func.py handler
+memory: 512
+config:
+  service_endpoint: ["service_endpoint"]
+  queue_id: ["queue_id"]
