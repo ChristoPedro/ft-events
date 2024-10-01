@@ -10,3 +10,4 @@ config:
   secretid: ["secretid"]
   server: ["server"]
   username: ["username"]
+  topic: ["topic"]

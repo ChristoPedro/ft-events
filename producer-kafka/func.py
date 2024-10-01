@@ -26,16 +26,13 @@ def handler(ctx, data: io.BytesIO=None):
         server = cfg["server"]
         username = cfg["username"]
         secretid = cfg["secretid"]
+        topic = cfg["topic"]
     except Exception as e:
-        print('Missing function parameters', flush=True)
+        print(f'Missing function parameters: {e}', flush=True)
         raise
     
     password = read_secret_value(secret_client, secretid)
     data = json.loads(data.getvalue())
-
-    topics = [] 
-    for keys in data.keys():
-        topics.append(keys)
 
 # Gera os dados necessário para o produder kafka
 
@@ -46,21 +43,19 @@ def handler(ctx, data: io.BytesIO=None):
     
 # Inicia o processamento do body para inserir nas filas corretas    
 
-    for x in topics:
+    values = json.dumps(data).encode('UTF-8')
 
-        for key in data[x].keys():
-
-            values = json.dumps(data[x][key]).encode('UTF-8')
+    key = "dados"
 
     # Inicia o kafka producer
 
-            try:
-                producer.send(x, key=key.encode('utf-8'), value=values)
-                producer.flush()
-                resp = 'Dados Inseridos com sucesso'
-            except (Exception, ValueError) as ex:
-                logging.getLogger().error('error parsing json payload: ' + str(ex)) 
-                resp = 'error parsing json payload: ' + str(ex)
+    try:
+        producer.send(topic, key=key.encode('UTF-8'), value=values)
+        producer.flush()
+        resp = 'Dados Inseridos com sucesso'
+    except (Exception, ValueError) as ex:
+        logging.getLogger().error('error parsing json payload: ' + str(ex)) 
+        resp = 'error parsing json payload: ' + str(ex)
 
     return response.Response(
         ctx,
