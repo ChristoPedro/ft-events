@@ -19,9 +19,9 @@ def put_message (queue_id, service_endpoint ,message):
                         content=json.dumps(message),
                     metadata=oci.queue.models.MessageMetadata(
                       ))]))
-        return put_messages_response.data.messages[0] , 200
+        return put_messages_response.data.messages[0]
     except Exception as e:
-        return {"Error" : e} , 404
+        return {"Error" : e}
 
 def handler(ctx, data: io.BytesIO=None):
 
@@ -35,9 +35,8 @@ def handler(ctx, data: io.BytesIO=None):
         raise
 
     message = json.loads(data.getvalue())
-    retorno , status = put_message(queue_id,service_endpoint, message )
+    retorno = put_message(queue_id,service_endpoint, message )
     return response.Response(
         response_data=str(retorno),
-        status=status,
         headers={"Content-Type": "application/json"}
     )
