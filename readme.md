@@ -17,8 +17,8 @@ ALL {resource.type = 'fnfunc', resource.compartment.id = 'ocid1.compartment.oc1.
 Criar política para o Dynamic Group da Function ter acesso a outros recursos de OCI
 
 ```bash
-allow dynamic-group functions to use secret-family in tenancy
-allow dynamic-group functions to use queue-push in tenancy
+allow dynamic-group default/functions to use secret-family in tenancy
+allow dynamic-group default/functions to use queue-push in tenancy
 ```
 
 ### Criar Functions Application
