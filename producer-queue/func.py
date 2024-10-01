@@ -36,6 +36,8 @@ def handler(ctx, data: io.BytesIO=None):
 
     message = json.loads(data.getvalue())
     retorno , status = put_message(queue_id,service_endpoint, message )
-    return response.Response(response=str(retorno),
-                    status=status,
-                    mimetype="application/json") 
+    return response.Response(
+        response_data=str(retorno),
+        status=status,
+        headers={"Content-Type": "application/json"}
+    )
