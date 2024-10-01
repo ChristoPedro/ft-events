@@ -44,6 +44,7 @@ allow dynamic-group functions to use queue-push in tenancy
 4. Chamar a Função Criada
    ```
    echo -n '{"Teste":"Producer Kafka"}' | fn invoke Functions producer --content-type application/json
+   ```
 
 ## Queue Producer
 
@@ -56,3 +57,4 @@ allow dynamic-group functions to use queue-push in tenancy
 4. Chamar a Função Criada
    ```
    echo -n '{"Teste":"Producer Queue"}' | fn invoke Functions producer-queue --content-type application/json
+   ```
